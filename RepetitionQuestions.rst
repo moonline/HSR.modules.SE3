@@ -260,6 +260,95 @@ Wie wird der Fortschritt gemessen?
 4.3 Agile Teams
 ---------------
 
+**4.3.1.**
+Welche Rolen gibt es? Wie werden die Rollen wahrgenommen? Wer ist verantwortlich?
+
+**4.3.2.**
+Nennen Sie einige Erfolgsfaktoren für Agile Teams.
+
+
+4.4 Agile Projekte
+------------------
+
+**4.4.1.**
+Was ist der "Inception Desk"?
+
+
+4.5 User Stories
+----------------
+
+**4.5.1.**
+Was sind User Stories? Wie werden sie notiert (Format)?
+
+**4.5.2.**
+Nennen Sie einige Eigenschaften guter User Stories.
+
+**4.5.3.**
+Erklären Sie den Unterschied zwischen User Storie und Use Case.
+
+
+4.6 Aufwandschätzung
+--------------------
+
+**4.6.1.**
+Wie soll zu Projektbegin geschätzt werden?
+
+**4.6.2.**
+Wie funktioniert agiles schätzen?
+
+**4.6.3.**
+Was ist Punkte basiertes schätzen und wie funktioniert es?
+
+**4.6.4.**
+Wann sollte neu geschätzt werden und wann nicht?
+
+
+4.7 Agile Planung
+-----------------
+
+**4.7.1.**
+Wie unterscheidet sich agile von statischer Planung?
+
+**4.7.2.**
+Wie funktioniert agile Planung?
+
+**4.7.3.**
+Wie flexibel ist der Projektumfang? Was ist zu tun, wenn neue User Stories hinzukommen?
+
+**4.7.4.**
+Listen Sie auf, aus welchen Schritten ein agiler Plan besteht.
+
+**4.7.5.**
+Zeichnen Sie eine Burn-Down Chart, bei der in Iteration 2 und 5 je 5 Punkte neue Features hinzukommen. Nehmen Sie alle andern notwendigen Annahmen an.
+
+
+4.8 Agile Methoden & Management
+-------------------------------
+
+**4.8.1.**
+Erklären Sie die folgenden Methoden:
+
+a) TDD
+b) Refactoring
+c) Continious Integration
+
+**4.8.2.**
+Was ist Just-In-Time Analysis?
+
+**4.8.3.**
+Was ist ein Iteration Planning Meeting und wie ist es aufgebaut?
+
+**4.8.4.**
+Welche Vorarbeiten müssen geleistet sein, um beim IPM die nächste Iteration planen zu können und was wird konkret mit wem geplant?
+
+**4.8.5.**
+Wozu dient die Mini Retrospektive?
+
+**4.8.6.**
+Wozu dienen die Daily Stand-up Meetings und was wird besprochen?
+
+
+
 
 
 
