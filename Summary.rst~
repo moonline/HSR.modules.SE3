@@ -1303,71 +1303,13 @@ b) UML Metamodel anpassen
 =======================
 
 .. figure:: img/14.1.jpg
-   :width: 90 %
 
    Notation
 
 
 .. figure:: img/14.2.jpg
-   :width: 90 %
 
    Superzustand: Von jedem Subzustand aus können alle Transaktionen des Superzustandes durchgeführt werden.
-
-
-.. figure:: img/14.3.jpg
-   :width: 90 %
-
-   Parallelzustände: Unabhängige Zustände
-
-
-.. figure:: img/14.4.jpg
-   :width: 90 %
-
-   Synchronisationspunkte: Synchroisation von Parallelzuständen
-
-
-
-.. figure:: img/14.5.jpg
-   :width: 90 %
-
-   Übergangsbedingungen
-
-
-.. figure:: img/14.6.jpg
-   :width: 90 %
-
-   Pseudo-Ereignisse ermöglichen Events bei Entry/Exit/When eines Zustandes
-
-
-   
-15 xUML Zustandsdiagramme
-=========================
-
-.. figure:: img/15.1.jpg
-
-   Blackbox / Glasbox betrachtung bei xUML
-
-
-
-16 OCL Constraint Language
-==========================
-
-.. note:: Kontext der OCL Expression muss immer explizit angegeben werden -> wichtig (Auf welcher Klasse/Attribut stehe ich?).
-
-.. warning:: Kontext Aufgabe Kommt an Prüfung.
-
-.. code-block:: uml
-
-  // Invariant im Kontext Customer
-  context customer inv myName; ...
-  
-  // Derive rule denoted ad derive
-  context customer.creditLimit derive myName: ...
-  
-
-.. note:: if als Expression "x = ()? a: b;" ist Seiteneffektfrei und NUR eine Expression. "if() {} else{}" ist eine Action Language. Expression bedeutet, das nur ein Wert evaluiert und zurückgegeben wird.
-
-
 
 
 
