@@ -705,9 +705,10 @@ Daily Stand Up Meeting
 ......................
 
 Jeder berichtet:
-* Was gestern getan
-* Was für heute geplant
-* Was beindert die Arbeit
+
+* Was er gestern getan hat
+* Was für heute geplant ist
+* Was behindert die Arbeit
 
 
 
