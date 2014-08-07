@@ -278,7 +278,62 @@ b) Classtype wird übergeben und mittels Reflection eine Instanz erzeugte
 			}
 		}
 	}
+	
+	
+.. code-block:: java
 
+	// Ausführung des JoinPoints, wenn Argumente den Typen von args() entsprechen
+	&& args(double, int)
+	after(double a,double b): call(* *.square(double, double) && args(a,b)
+	
+	
+	
+Beispiele
+.........
+
+.. code-block:: java
+
+	// execution of every main method
+	after(): execution(* main(..)) {
+		// so something
+	}
+	
+	
+	// get salary before and after increasing
+	public pointcut increaseSalary(Employee e): execution(void Employee.increate*(..)) && target(e);
+	
+	before(Employee e): increaseSalary(e) {
+		int oldSalary = e.getSalary();
+		// ...
+	}
+	after(Employee e): increaseSalary(e) {
+		int oldSalary = e.getSalary();
+		// ...
+	}
+	
+	
+	// increase salary max 100.-
+	arount(Employee e, int amount): execution(void Employee.increate*(..)) && target(e) && args(amount) {
+		if(amount > 100) {
+			amount = 100;
+		}
+		proceed(amount);			
+	}
+	
+	
+	// print parameter of every method call with 1 argument(String)
+	// prevent recursive call of the aspect: !within(ThisAspect)
+	before(String param): call(* *(String)) && param(param) && (!within(ThisAspect)) {
+		System.out.println("Value: "+param);
+	}
+	
+	
+	// print class name of ever void-method call on Persons or derived classes
+	after(): call(void Person+.*(..)) {
+		System.out.println("Class: "+thisJoinPoint.getTarget().getClass().getName());
+	}
+	
+	
 
 3 References
 ============
@@ -296,6 +351,21 @@ b) Classtype wird übergeben und mittels Reflection eine Instanz erzeugte
 
 .. figure:: img/3.3.jpg
 
+
+::
+
+	new Object() -> [Created] ---instanzieren---> [In Use] ---var = null---> [Unreachable]
+	                                                                               |
+	                                                                               |
+	     .-------GC findet Objekt, markiert Objekte mit finalize() Methode---------'
+	     |
+	     v
+	     +----Objekt besitzt finalize() Methode---> [Collected] 
+	     |                                               |
+	     |                                               |
+	     '------------> [Finalized] <------finalize()----'
+	     
+	     
 
 3.2 Resurection
 ---------------

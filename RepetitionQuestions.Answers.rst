@@ -238,3 +238,284 @@ Alternativen:
 * Classtype übergeben und über Reflection instanziieren
 
 
+2 Referenzen
+============
+
+**2.0.1. Nicht erreichbare Objekte**
+
+Nicht mehr erreichbare Objekte werden vom GC erkannt und zum Abräumen gesammelt.
+
+
+**2.0.2. Objektzuständer**
+
+created
+	Temporärer Zustand während Instanzierung
+in use
+	Objekt referenziert
+invisible
+	Noch referenziert, aber Referenz nicht sichtbar (selten)
+unreachable
+	Nicht mehr referenziert
+collected
+	Nicht mehr referenzierte und vom GC erkannte Objekte mit finalize() Methode
+finalized
+	Vom GC erkannt, für Objekte mit finalize() Methode wurde diese aufgerufen
+	
+	
+**2.0.3. Resurection**
+
+* Durch übergabe von this an ein erreichbares Objekt innerhalb von finalize() kann das Objekt wieder sichtbar gemacht werden -> Wiederauferstehung.
+* Problem: finalize() wird nur einmal aufgerufen
+
+
+2.1 Schwache Referenzen
+-----------------------
+
+**2.1.1. Schwache Referenzen**
+
+Java Klasse, die Referenzen verkörpert, die der GC abräumen darf
+
+
+**2.1.2. Referenz Typen**
+
+Weak references
+	Schwache Referenzen, dürfen vom GC abgeräumt werden
+Soft references
+	Schwache Referenzen, die vom GC abgeräumt werden dürfen, bevor das Memory ausgeht (OutOfMemoryException) -> älteste und am wenigsten benutzte zuerst
+Phantom references
+	Objekt nicht zugreifbar, finalize() wurde schon ausgeführt, Objekt wird jedoch erst gelöscht, wenn clear() aus der App heraus aufgerufen wird.
+	
+	
+**2.1.3. Erreichbarkeiten**
+
+strongly reachable
+	Normal referenziert
+softly reachable
+	Über eine Kette von Soft- oder schwächeren Referenzen referenziert
+weakly reachable
+	Über eine Kette von Weak- oder schwächeren Referenzen referenziert
+phantom
+	Über eine Kette von Phantom Referenzen referenziert
+unreachable
+	Nicht erreichbar
+	
+	
+**2.1.4. java.lang.SoftReference**
+
+* Wrapper Klasse für Softreferenzen
+* Unbekannt, ob Finalize schon aufgerufen wurde, wenn diese sich in der ReferenceQueue befindet
+
+
+**2.1.5. java.lang.ref.WeakReference**
+
+* Wrapper Klasse für Weakreferenzen
+* Unbekannt, ob Finalize schon aufgerufen wurde, wenn diese sich in der ReferenceQueue befindet
+
+
+**2.1.6. ReferenceQueue**
+
+Der GC sammelt darin erkannte Objekte (unreachable oder softly, weakly oder phantom reachable)
+
+
+**2.1.7. java.lang.ref.PhantomReference**
+
+* Wrapper Klasse für Phantomreferenzen
+* Kein Zugriff auf Objekt
+* Finalize wurde garantiert schon aufgerufen, wenn diese sich in der ReferenceQueue befindet
+
+
+**2.1.8. API**
+
+gc()
+	GC anstupsen (keine Garantie, das er wirklich startet)
+runFinalization()
+	finalize() für collection Objekte aufrufen
+freeMemory()
+	Speicher freigeben
+totalMemory()
+	Benutzter Speicher (VM)
+maxMemory()
+	Maximal der VM zur Verfügung stehender Speicher
+addShutdownHook(Threak hook)
+	Threads, die beim Runterfahren der VM aufgerufen werden sollen
+
+
+
+3 AOP
+=====
+
+**3.0.1. AOP**
+
+Aspektorientierte Programmierung ermöglicht das Zusammenfassen von Logik, die horizontal durch viele Bereiche der Applikation verteilt sind, z.B. Security, Logging.
+
+Aspekte werden von einem Waver in den Code der Applikation eingewebt.
+
+
+3.1 AspectJ
+-----------
+
+**3.1.1. PointCut, Advice, Aspect, JoinPoint**
+
+JoinPoint
+	Möglicher Einwebepunkt
+PointCut
+	Tatsächliche Einwebestelle (Filter auf JoinPoint)
+Advice
+	Einzuwebendes Snippet
+Aspect
+	Eingewobenes Snippet (PointCut+Advice = Aspect)
+
+
+**3.1.2. execute & call**
+
+Beide triggern den Aufruf einer Methode. Der Unterschied liegt jedoch im Kontext:
+
+call()
+	Kontext ist aufrufende Methode
+execute()
+	Kontext ist aufgerufene Methode
+	
+
+**3.1.3. arround()**
+
+args(parameter)
+
+.. code-block:: java
+
+	double around(double a, double b): call(double Rectangle.calcArea(double, double) && args(a,b) {
+		if(a > 2) {
+			return proceed(a,b);
+		}
+	}
+
+	
+**3.1.4. thisJoinPoint**
+
+"this" bezeichnet den Aspekt selbst. Darum muss auf den Kontext mit thisJoinPoint zugegriffen werden.
+
+.. code-block:: java
+	
+	// Gibt die Klasse des Aspektes zurück
+	Class thisJoinPoint.getThis()
+	
+	// Gibt die Aufrufargumente zurück
+	Object[] thisJoinPoint.getArgs()
+	
+	// Gibt die aufgerufene Klasse zurück
+	Class thisJoinPoint.getTarget()
+	
+	// Gibt den Typ des Aspekt zurücks (z.B. method-call)
+	String thisJoinPoint.getKind()
+	
+	// Gibt die Signatur der Klasse zurück
+	// z.B. double Square.calcArea(double)
+	String thisJoinPoint.getSignature()
+	
+	
+**3.1.5. target, args**
+
+target()
+	Filtert auf Zielobjekt zur Laufzeit, z.B. target(MyPackage.*)
+args()
+	Filtert auf Argumenttypen, z.B: args(double, int) oder args(a,b)
+	
+	
+**3.1.6. PointCut Kombinationen**
+
+!, &&, ||
+
+.. code-block:: java
+
+	call(* *(int)) && !call(* Square.*(int)) || call(* *(int)) && target(vehicles.Car)
+	
+	
+** 3.1.7. Zugriffsrechte**
+
+* Gleich wie normale Klassen, da Aspects Klassen entsprechen.
+* Zugriff auf public Felder, priviledged Aspekte haben auch Zugriff auf private Felder.
+
+
+
+
+
+
+5 Modellierung
+==============
+
+**5.0.1. Modelle**
+
+Modelle sind Abbildungen der Realität und dienen der Beschreibung eines Originals.
+
+
+**5.0.2. Eigenschaften eines Modells**
+
+* Original
+* Zweck
+* Zielgruppe
+* Notation
+* Vereinfachung
+
+
+**5.0.3. Modell Eigenschaften Beispiele**
+
+1) Technische Zeichnung eines Segelschiffs
+	Original
+		Das "richtige" Segelschiff
+	Zweck
+		Herstellung des Schiffs, Dokumentation, Renovation
+	Zielgruppe
+		Bootsbauer, Werkstatt
+	Vereinfachung
+		keine Farben, nur Umrisse der Bauelemente, nur wichtige Teile dargestellt, Lange Teile in der Mitte gekürzt dargestellt
+	Notation
+		Technische Zeichnung nach VSM
+
+2) Einrichtngsplan einer Wohnung
+	Original
+		Die einzurichtende Wohnung
+	Zweck
+		Einrichtungsvarianten ausprobieren
+	Zielgruppe
+		Der/die Einziehenden, die wahrscheinlich auch Autor des Plans sind
+	Vereinfachung
+		Wohnung und Möbel nur im Grundriss und als Umrisse dargestellt
+	Notation
+		Skizze: Wohnung und Möbel im Grundriss (Kein Standardisiertes Format)
+
+3) Musiknoten
+4) Elektrischen Schaltplan
+		
+**5.0.4. Modellieren & Programmieren**
+
+Das Programm (Source Code) ist wiederum ein Modell des später ablaufenden Binärcodes.
+Das UML Modell ist das Modell des Source Codes.
+
+
+**5.0.5. Zachmann Framework**
+
+Ist ein Modellsammelkasten, aus dem in jedem Modell ein Subset zum Einsatz kommt.
+
+
+**5.0.6. Modellasprekte in der SW-Entwicklung**
+
+* Zweck
+	* Konstruktive Modelle: Spezifikation
+	* Analytische Modelle: Illustration von Aspekten
+* Statische/dynamische Modelle
+* Black Box/Glasbox Modelle
+
+
+**5.0.7. Modelle**
+
+Dynamische/Statische Modelle
+	Zeigen Verhalten/Zustände
+Blackbox/Glasbox
+	Systeme nur von Aussen/Systeme inkl. innerer Aufbau
+Konstruktive/Analytische
+	Spezifikation/Illustration von Aspekten
+	
+	
+**5.0.8 Eindeutigkeit, Vollständigkeit, Ausführbarkeit**
+
+
+
