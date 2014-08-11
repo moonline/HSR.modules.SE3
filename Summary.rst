@@ -460,10 +460,11 @@ Die finalize()-Methode wird vom Garbage-Collector garantiert nur einmal aufgeruf
 .. image:: img/4.2.jpg
    :width: 90 %
    
-   
+      
 4.1 Scrum
 ---------
 
+* RUP und Scrum schlecht vergleichbar, da RUP alle SE Disziplinen beschreibt und Scrum nur Projektmanagement
 * Iterativ wie RUP
 * Sprints entsprechen Iterationen
 * Sprintziele sollten während Sprint nicht verändert werden
@@ -646,6 +647,17 @@ Story-Gathering Workshop
 ........................
 
 .. image:: img/4.21.jpg
+
+
+Agiles Schätzen
+...............
+
+* Punkte statt Tagen
+	* Relatives Schätzen ist für Menschen einfacher als absolutes
+	* Erinnert daran, das es Schätzungen sind
+	* Mass für die Grösse der Aufgabe (nicht direkt mit Dauer gekoppelt)
+* Geschwindigkeit bestimmen (Punkte/Tag)
+* Schätzungen mit Punkten sind einfacher an sich ändernde Entwicklungsgeschwindigkeit anzupassen (Velocity)
 
 
 
